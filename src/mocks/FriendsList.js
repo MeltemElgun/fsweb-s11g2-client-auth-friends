@@ -4,10 +4,16 @@ import { useState, useEffect } from "react";
 export default function FriendsList() {
   const [friends, setFriends] = useState([]);
   const token = localStorage.getItem("LOGIN");
+
+  // function handleRemove(id) {
+  //   let newList = friends.filter((friend) => friend.id !== id);
+  //   setFriends(newList);
+  // }
+
   useEffect(() => {
     axios
       .get("http://localhost:9000/api/friends", {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `${token}` },
       })
       .then((res) => setFriends(res.data))
       .catch((err) => console.log(err));
@@ -22,6 +28,7 @@ export default function FriendsList() {
             <div className="p-4 text-left">
               -<h3 className="font-bold text-lg">{item.name}</h3>-
               <p>{item.email}</p>
+              <button>SİL</button>
             </div>
           </div>
         ))}

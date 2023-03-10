@@ -17,17 +17,26 @@ export default function AddFriend() {
     });
   }
 
-  function handleSubmit(event) {
-    event.preventDefault();
+  const token = localStorage.getItem("LOGIN");
+
+  function handleSubmit(data) {
+    data.preventDefault();
 
     axios
-      .post("http://localhost:9000/api/friends", addData)
+      .post(
+        "http://localhost:9000/api/friends",
+        { name: addData.name, email: addData.email },
+        {
+          headers: { Authorization: token },
+        }
+      )
       .then((res) => {
-        console.log("addfriend", res);
-        setAddData(res.data);
+        console.log("addfriend", res.data);
+        history.push("/friends");
       })
       .catch((error) => console.log(error));
   }
+
   return (
     <div>
       <h2 className="text-xl font-bold p-2">ADD FRİEND</h2>
